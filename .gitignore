@@ -30,5 +30,5 @@ node_modules
 # Bower dependency
 .public/libs
 
-#config
-.app/config.js
+# config
+app/config.js
