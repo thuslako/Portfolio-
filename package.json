@@ -1,0 +1,25 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio site ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thuslako/Portfolio-.git"
+  },
+  "keywords": [
+    "portfolio",
+    "front-end",
+    "node",
+    "mean-stack"
+  ],
+  "author": "Lukundu Lako",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thuslako/Portfolio-/issues"
+  },
+  "homepage": "https://github.com/thuslako/Portfolio-#readme"
+}
