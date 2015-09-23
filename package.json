@@ -21,5 +21,12 @@
   "bugs": {
     "url": "https://github.com/thuslako/Portfolio-/issues"
   },
-  "homepage": "https://github.com/thuslako/Portfolio-#readme"
+  "homepage": "https://github.com/thuslako/Portfolio-#readme",
+  "dependencies": {
+    "body-parser": "^1.14.0",
+    "mongoose": "^4.1.8",
+    "node-restful": "^0.2.2",
+    "passport": "^0.3.0",
+    "passport-jwt": "^1.2.1"
+  }
 }

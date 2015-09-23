@@ -1,7 +1,9 @@
 var 
 	express 		=	require('express'),
+	https			=   require('https'),
 	app				=	express(),
 	bodyParser		=	require('body-parser'),
+	passport      	= 	require('passport'),
 	mongoose		=	require('mongoose');
 
 
@@ -13,9 +15,12 @@ var port = process.env.PORT || 3000;
 
 	app.use(express.static(__dirname + '/public'));
 
-	app.use('/',function(req,res){
-		console.log('request made')
-	});
+	require('./modules/users/server/passport')(passport);
+	app.use('/api/auth',passport.authenticate('jwt', { session: false}),
+	    function(req, res) {
+	        res.send("auto");
+	    }
+	);
 
 	app.listen( port);
 	console.log('server running well on port'+ port);
