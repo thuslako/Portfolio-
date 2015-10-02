@@ -2,7 +2,7 @@ var
 	  app				  = require('express')(),
 	  jwt       		  = require('jsonwebtoken'),
 	  router			  = require('express').Router(),
-      User                = require('../models/user.schema');
+      User                = require('../model/user.schema');
 
 
 var 
