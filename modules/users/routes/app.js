@@ -6,7 +6,7 @@ var
 
 
 var 
-	config = require('../../../app/config');
+	config = require('../../../config');
 	app.set('superSecret', config.secret);
 
 	// route middleware to verify a token

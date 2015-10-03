@@ -7,10 +7,13 @@ var
 	bodyParser		=	require('body-parser'),
 	mongoose		=	require('mongoose'),
 	logger			=   require('morgan');
+// set Config 
+var config = require('./config');
+	app.set('superSecret', config.secret);
 
 // setup port & db connection 
 var 
-	port = process.env.PORT || 3000,
+	port = process.env.PORT || 3000;
 	mongoose.connect('mongodb://localhost:27017/portfolio');
 
 //middleware 
@@ -21,10 +24,6 @@ var
 // expose given dir
 	app.use(express.static(__dirname + '/public'));
 	app.use(express.static(__dirname + '/views'));
-
-// set Config 
-var config = require('.config');
-	app.set('superSecret', config.secret);
 
 // routing middleware 
 
