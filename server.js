@@ -23,7 +23,6 @@ var
 
 // expose given dir
 	app.use(express.static(__dirname + '/public'));
-	app.use(express.static(__dirname + '/views'));
 
 // routing middleware 
 
