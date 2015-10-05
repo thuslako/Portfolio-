@@ -8,7 +8,7 @@ var
 var 
 	config = require('../../../config');
 	app.set('superSecret', config.secret);
-
+User.methods(['get', 'post', 'put', 'delete']);
 	// route middleware to verify a token
 router.post('/auth', function(req, res) {
 	User.findOne({
@@ -69,6 +69,7 @@ router.use(function(req, res, next) {
 	    
 	  }
 });
+User.register(router,'/user');
 router.get('/name', function(req, res) {
 	res.json({name: 'lukundu'});
 });

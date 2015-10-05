@@ -14,7 +14,7 @@ var config = require('./config');
 // setup port & db connection 
 var 
 	port = process.env.PORT || 3000;
-	mongoose.connect('mongodb://localhost:27017/portfolio');
+	mongoose.connect('mongodb://192.168.0.23:27017/portfolio');
 
 //middleware 
 	app.use(bodyParser.json());
@@ -22,10 +22,16 @@ var
 	app.use(bodyParser.urlencoded({ extended: true }));
 
 // expose given dir
-	app.use(express.static(__dirname + '/public'));
+	app.use('/css',express.static(__dirname + '/css'));
+	app.use('/libs',express.static(__dirname + '/libs'));
+	app.use('/js',express.static(__dirname + '/js'));
+	app.use('/views',express.static(__dirname + '/views'));
+	app.use('/public',express.static(__dirname + '/public'));
 
 // routing middleware 
-
+	app.all('/*',function(req,res,next){
+		res.sendFile('public/index.html', { root: __dirname});
+	});
 	app.use('/api', require('./modules/users/routes/app.js'));
 
 	app.listen( port);
