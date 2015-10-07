@@ -2,7 +2,7 @@
 
 angular.module("folioapp", ['ui.router','ngSanitize'])
 .config(function($stateProvider,$urlRouterProvider,$locationProvider){
-	 $urlRouterProvider.otherwise("/join");
+	 $urlRouterProvider.otherwise("/login");
 
 	 $stateProvider
 	 .state('login', {
