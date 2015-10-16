@@ -14,29 +14,28 @@ var config = require('./config');
 // setup port & db connection 
 var 
 	port = process.env.PORT || 3000;
-	mongoose.connect('mongodb://192.168.0.24:27017/portfolio');
+	mongoose.connect('mongodb://localhost:27017/portfolio');
 
 //middleware 
 	app.use(logger('dev'));
 	app.use(bodyParser.json());
 	app.use(bodyParser.json({ type: 'application/vnd.api+json'}));
 	app.use(bodyParser.urlencoded({ extended: true }));
+
 // expose given dir
-	app.use('/css',express.static(__dirname + '/public/css'));
-	app.use('/libs',express.static(__dirname + '/public/libs'));
-	app.use('/js',express.static(__dirname + '/public/js'));
-	app.use('/views',express.static(__dirname + '/public/views'));
-	app.use('/public',express.static(__dirname + '/public'));
+	app.use(express.static(__dirname + '/public'));
+	app.get('/*',function(req,res,next){
+		res.sendfile('index.html',{root:__dirname +'/public' })
+	});
 
 // routing middleware 
 	app.use('/api/admin/*',require('./middleware/auth/auth').ValidateToken);
 	app.use('/', require('./router/routes'));
 
-	app.use(function(req, res, next) {
-	  var err = new Error('Not Found');
-	  err.status = 404;
-	  next(err);
+	app.use('/*',function(err,req, res, next) {
+	  res.json(404,'Not Found');
 	});
+
 	app.listen( port);
 	console.log('server running well on port: '+ port);
 

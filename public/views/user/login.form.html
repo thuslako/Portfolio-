@@ -1,7 +1,17 @@
-<form method='post' action='api/auth'>
-	<label for="email">Email</label>
-	<input type="text" name='email'placeholder="Email" required>
-	<label for="password">Password</label>
-	<input type="password" name='password'required>
-	<input type="submit"value="Login">
+<form method='post' ng-submit="submit(user)" ng-controller='authCtrl'>
+  <div class="group"> 
+    <h3>{{token}}</h3> 
+  </div>
+	<div class="group">      
+      <input type="text" name='email' ng-model='user.email' placeholder="Your email" required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+    </div>
+      
+    <div class="group">      
+      <input type="password" name='password'  ng-model='user.password_hash' placeholder="Your password"required>
+      <span class="highlight"></span>
+      <span class="bar"></span>
+    </div>
+	<input type="submit" value="Login">
 </form>

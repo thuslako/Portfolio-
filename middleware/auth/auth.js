@@ -12,17 +12,18 @@ var
 var auth = {
 	// auth user 
 	AuthUser: function(req,res,next){
+		console.log('called to check user');
 		User.findOne({
 		    email: req.body.email
 		}, function(err, user) {
 
 			if (err) throw err;
 		    if (!user) {
-		      res.end('wrong password or username', 400);
+		      res.end('wrong password or username dude', 400);
 		    } else if (user) {
 		      // check if password matches
 		      if (user.password_hash != req.body.password_hash) {
-		       res.end('wrong password or username', 400);
+		       res.end('wrong password or username yo', 400);
 		      } else {
 			        var token = jwt.sign(user.name, app.get('superSecret'), {
 			          expiresInMinutes: 1440 // expires in 24 hours
