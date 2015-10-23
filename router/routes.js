@@ -7,7 +7,11 @@ var
 
 
 router.use('/auth',auth.AuthUser);
+Work.methods(['get']);
+Work.register(router,'/admin/work');
 router.use('/admin/*',auth.ValidateToken);
+Work.methods(['post', 'put', 'delete']);
 User.register(router,'/admin/users');
+Work.register(router,'/admin/work');
 
 module.exports = router;

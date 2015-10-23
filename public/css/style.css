@@ -1,7 +1,12 @@
+
+html{
+	position: relative;
+	min-height: 100%;
+}
 body{
 	width: 100%;
 	padding: 0;
-	margin: 0;
+	margin: 0 0 50px;
 	font-family:  sans-serif;
 }
 
@@ -15,23 +20,32 @@ header{
 	position: relative;
 	width: 100%;
 	height: 5em;
-	top: -1.4em;
-    padding: 0.5em;
-	background: #95a5a6;
-	color: #7f8c8d;
+	color: black;
+}
+
+header h1{
+	display: inline-block;
+	padding-left: 0.5em;
 }
 
 
-section {
+.main {
 	position: relative;
+	display: inline;
 	width: 100%;
+	min-height: 100%;
+	margin-bottom: -50px;
+}
+
+.main:after{
+	display: block;
 }
 
 form {
 	position: relative;
 	width: 300px;
 	height: auto;
-	background: #F3F3F3;
+	border: solid 2px #000;
 	text-align:center;
 	padding: 2em;
 	margin: 0 auto;
@@ -43,7 +57,7 @@ form {
   margin-bottom:45px; 
 }
 input         {
-  font-size:10px;
+  font-size:14px;
   padding:10px 10px 10px 5px;
   display:inline-block;
   border:none;
@@ -74,5 +88,18 @@ input[type="text"], input[type="password"]{
 }
 .bar:after {
   right:50%; 
+}
+
+
+footer{
+	top:100%;
+	display: block;
+	position: absolute;
+	background: #000;
+	color:white;
+	width: 100%;
+	margin-top: 2em;
+	padding:1em 0;
+	text-align: center;
 }
 
