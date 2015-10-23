@@ -12,24 +12,22 @@ var
 var auth = {
 	// auth user 
 	AuthUser: function(req,res,next){
-		console.log('called to check user');
 		User.findOne({
 		    email: req.body.email
 		}, function(err, user) {
 
 			if (err) throw err;
 		    if (!user) {
-		      res.end('wrong password or username dude', 400);
+		     res.status(401).send('wrong email or password');
 		    } else if (user) {
 		      // check if password matches
 		      if (user.password_hash != req.body.password_hash) {
-		       res.end('wrong password or username yo', 400);
+		              res.status(401).send('wrong email or password');
 		      } else {
-			        var token = jwt.sign(user.name, app.get('superSecret'), {
-			          expiresInMinutes: 1440 // expires in 24 hours
+			        var token = jwt.sign(user, app.get('superSecret'), {
+			          expiresIn: 60000 
 			        });
-			        // return the information including token as JSON
-			        res.json({ token: token});
+			        res.json(token);
 				 }  
 		   }
 		});
@@ -37,28 +35,26 @@ var auth = {
 	},
 	// checks token if valid 
 	ValidateToken: function(req,res,next){
-		var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+		var token = req.headers.authorization||req.body.token || req.query.token || req.headers['auth-token'];
+
 		  // decode token
-		  if (token) {
+		  if (token && token.split(' ')[0] === 'Bearer') {
 		    // verifies secret and checks exp
-		    jwt.verify(token, app.get('superSecret'), function(err, decoded) {      
+		    jwt.verify(token.split(' ')[1], app.get('superSecret'), function(err, decoded) {      
 		      if (err) {
 		        return res.json({ success: false, message: 'Failed to authenticate token.' });    
 		      } else {
 		        // if everything is good, save to request for use in other routes
-		        req.decoded = decoded;    
+		        req.decoded = decoded;
+		        console.log(decoded)    
 		        next();
 		      }
 		    });
 
 		  } else {
 
-		    res.status(401);
-		    res.json({
-		      "status": 401,
-		      "message": "Invalid Token or Key"
-		    });
-		    return;
+		    res.status(401).json('No access to this page').end();
 		 }
 	} 
 

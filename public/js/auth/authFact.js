@@ -1,24 +1,29 @@
 'use strict';
 
 define(function(){
-		angular.module('auth.api',[]).factory('authFactory',['$http',function($http){
+		angular.module('auth.api',['ngStorage']).factory('authFactory',['$http','$location',function($http,$location){
 
 			var auth = {};
-			var token = '';
-			var err = 'Wrong pass or email';
+			var token;
 
 			auth.login = function (user){
-			    return $http.post('/api/auth',user).then(function(newtoken){
-			    	return token = newtoken.data;
+			    return $http.post('/api/auth',user).then(function(token){
+			    	if(!window.localStorage.getItem('auth-token')){
+			    		window.localStorage.setItem('auth-token',token.data);
+			    	}
+			    	$location.path('/join');
+			    	
 			    },function(err){
-			    	return err;
+			    	return token='wrong email or password';
 			    });
 			};
 			auth.validateToken = function (id){
 			    return $http.get('/api/admin/user'+ id);
 			};
-			auth.logout = function (user){
-			    return $http.post('/api/parts', user);
+
+			auth.logout = function (){
+			    window.localStorage.removeItem('auth-token');
+			    $location.path('/');
 			};
 
 			return auth; 

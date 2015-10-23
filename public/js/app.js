@@ -1,14 +1,22 @@
 'use strict';
 
 define(function(){
-  angular.module('portfolio', ['ui.router','auth','auth.api'])
-  .config(['$stateProvider','$urlRouterProvider','$locationProvider',function($stateProvider,$urlRouterProvider,$locationProvider){
+  angular.module('portfolio', ['ui.router','auth','auth.api','ngStorage','angular-jwt'])
+  .config(['$stateProvider','$urlRouterProvider','$locationProvider','$httpProvider','jwtInterceptorProvider',function($stateProvider,$urlRouterProvider,$locationProvider,$httpProvider,jwtInterceptorProvider){
        $urlRouterProvider.otherwise("/login");
+
+
+       jwtInterceptorProvider.tokenGetter = function(){
+          return localStorage.getItem('auth-token');
+        }
+
+       $httpProvider.interceptors.push('jwtInterceptor');
 
        $stateProvider
        .state('login', {
           url: "/login",
           templateUrl: "views/user/login.form.html",
+          skipAuthorization: true,
           controller:'authCtrl'
         }).state('join', {
           url: "/join",

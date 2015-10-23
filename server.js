@@ -4,6 +4,7 @@ var
 	express 		=	require('express'),
 	https			=   require('https'),
 	app				=	express(),
+	methodOverride	= 	require('method-override');
 	bodyParser		=	require('body-parser'),
 	mongoose		=	require('mongoose'),
 	logger			=   require('morgan');
@@ -21,18 +22,15 @@ var
 	app.use(bodyParser.json());
 	app.use(bodyParser.json({ type: 'application/vnd.api+json'}));
 	app.use(bodyParser.urlencoded({ extended: true }));
-
+	app.use(methodOverride());
 // expose given dir
 	app.use(express.static(__dirname + '/public'));
-	app.get('/*',function(req,res,next){
-		res.sendfile('index.html',{root:__dirname +'/public' })
-	});
-
 // routing middleware 
-	app.use('/api/admin/*',require('./middleware/auth/auth').ValidateToken);
-	app.use('/', require('./router/routes'));
-
-	app.use('/*',function(err,req, res, next) {
+	app.use('/api/', require('./router/routes'));
+	app.use('/*',function(req,res,next){
+		res.sendFile('index.html',{root:__dirname +'/public' })
+	});
+	app.use('/*',function(req, res, next) {
 	  res.json(404,'Not Found');
 	});
 
