@@ -1,6 +1,8 @@
-	 var
+//--- loading required packages 
+var
 	  app				  = require('express')(),
 	  jwt       		  = require('jsonwebtoken'),
+	  bcrypt			  =	require('bcrypt'),
       User                = require('../../modules/users/model/user.schema');
 
 // config for secert
@@ -8,7 +10,7 @@ var
 	config = require('../../config');
 	app.set('superSecret', config.secret);
 
-
+// auth class for middleware to auth user
 var auth = {
 	// auth user 
 	AuthUser: function(req,res,next){
@@ -20,15 +22,16 @@ var auth = {
 		    if (!user) {
 		     res.status(401).send('wrong email or password');
 		    } else if (user) {
-		      // check if password matches
-		      if (user.password_hash != req.body.password_hash) {
-		              res.status(401).send('wrong email or password');
+		    	console.log('unhashed : ',req.body.password_hash);
+		    	console.log('hashed : ',user.password_hash);
+		      if (!bcrypt.compareSync(req.body.password_hash, user.password_hash) ) {
+		              res.status(401).send('wrong password');
 		      } else {
-			        var token = jwt.sign(user, app.get('superSecret'), {
+			     var token = jwt.sign(user._id, app.get('superSecret'), {
 			          expiresIn: 60000 
 			        });
 			        res.json(token);
-				 }  
+			  }  
 		   }
 		});
 
@@ -46,8 +49,7 @@ var auth = {
 		        return res.json({ success: false, message: 'Failed to authenticate token.' });    
 		      } else {
 		        // if everything is good, save to request for use in other routes
-		        req.decoded = decoded;
-		        console.log(decoded)    
+		        req.decoded = decoded;   
 		        next();
 		      }
 		    });
