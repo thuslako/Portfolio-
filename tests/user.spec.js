@@ -23,12 +23,8 @@ describe('User model', function(){
 
 
 	it('should require missing fields',function(done){
-		Users.create({
-			name: 'Juwana Lako',
-			email: 'juwana@gmail.com',
-		},function(err,part){
-			expect(err).to.exist;
-            expect(String(err)).to.match(/is required/);
+		Users.find(function(err,users){
+            expect(users);
 			done();
 		});
 

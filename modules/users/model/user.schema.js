@@ -13,23 +13,4 @@ var UserSchema = new  mongoose.Schema({
 
 var User = mongoose.model( 'User', UserSchema );
 
-// .before('post', function(req,res,next){
-// 	console.log('posting and hashing')
-// 	req.body.password_hash = bcrypt.hashSync(User.password_hash, salt);
-// 	next();
-
-// });
-
-
-function hashpassword (req,res,next) {
-
-	bcrypt.hash(User.password_hash, salt, function(err, hash) {
-			if(err) res.json('error: ',err).end();
-			req.body.password_hash = hash;
-			next();
-	});
-}		
-
-
-
 module.exports = User;

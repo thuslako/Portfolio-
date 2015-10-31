@@ -20,7 +20,9 @@ define(function(){
           controller:'authCtrl'
         }).state('join', {
           url: "/join",
-          templateUrl: "views/user/join.form.html"
+          templateUrl: "views/user/join.form.html",
+          skipAuthorization: true,
+          controller:'authCtrl'
         });
        $locationProvider.html5Mode({
           enabled: true,

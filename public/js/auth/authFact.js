@@ -5,7 +5,15 @@ define(function(){
 
 			var auth = {};
 			var token;
-
+			auth.join = function (user){
+			    return $http.post('/api/admin/users',user).then(function(token){
+					
+			    	$location.path('/login');
+			    	
+			    },function(err){
+			    	return token='can/"t join';
+			    });
+			};
 			auth.login = function (user){
 			    return $http.post('/api/auth',user).then(function(token){
 			    	if(!window.localStorage.getItem('auth-token')){
